@@ -15,3 +15,8 @@ body {
   margin: 0;
   background: #020d07;
 }
+
+.container {
+  max-width: 1376px;
+  margin: 0 auto;
+}
