@@ -22,8 +22,9 @@ export default function HeaderMobile() {
   // đóng khi click ngoài / nhấn ESC
   useEffect(() => {
     const onDoc = (e) => {
-      if (open && panelRef.current && !panelRef.current.contains(e.target))
+      if (open && panelRef.current && !panelRef.current.contains(e.target)) {
         setOpen(false);
+      }
     };
     const onKey = (e) => e.key === "Escape" && setOpen(false);
     document.addEventListener("mousedown", onDoc);
@@ -35,30 +36,34 @@ export default function HeaderMobile() {
   }, [open]);
 
   return (
-    <header className="bg-[#020D07] z-[3] lg:hidden">
-      <div className="container">
-        {/* Top bar: logo trái, menu phải (h = 32px) */}
-        <div className="h-[32px] flex items-center justify-between">
-          <NavLink to="/" className="shrink-0">
+    <header className="bg-[#020D07] z-[3] lg:hidden border-b border-[#0E1A13]">
+      <div className="container px-4">
+        {/* Header height = 72px, padding top/bottom 20px */}
+        <div className="h-[72px] flex items-center justify-between">
+          {/* Logo Heineken 63×32 */}
+          <NavLink to="/" className="flex items-center">
             <img
               src={logo}
               alt="Heineken"
-              className="block h-[32px] w-auto object-contain"
+              className="block w-[63px] h-[32px] object-contain"
             />
           </NavLink>
 
-          {/* Icon menu 24x24 bên phải */}
+          {/* Nút menu 24×24, bo tròn 8px */}
           <button
             aria-label="Mở menu"
-            className="inline-flex items-center justify-center w-[24px] h-[24px] text-white"
+            className="flex items-center justify-center w-[24px] h-[24px] rounded-[8px] text-white hover:bg-white/10 transition-colors"
             onClick={() => setOpen(true)}
           >
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-              <path
-                d="M3 6h18M3 12h18M3 18h18"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M3 6h18M3 12h18M3 18h18" />
             </svg>
           </button>
         </div>
@@ -73,38 +78,40 @@ export default function HeaderMobile() {
           />
           <aside
             ref={panelRef}
-            className="absolute right-0 top-0 h-full w-[85%] max-w-[343px] bg-[#0A160F] text-white shadow-xl"
+            className="absolute right-0 top-0 h-full w-[85%] max-w-[343px] bg-[#0A160F] text-white shadow-xl transition-transform duration-300"
           >
-            {/* Header panel: logo + nút đóng */}
-            <div className="h-[56px] flex items-center justify-between px-4">
+            {/* Header trong panel */}
+            <div className="h-[56px] flex items-center justify-between px-4 border-b border-white/10">
               <img src={logo} alt="Heineken" className="h-[24px] w-auto" />
               <button
                 aria-label="Đóng menu"
-                className="inline-flex items-center justify-center w-[24px] h-[24px]"
+                className="flex items-center justify-center w-[24px] h-[24px] rounded-[8px] hover:bg-white/10"
                 onClick={() => setOpen(false)}
               >
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-                  <path
-                    d="M6 6l12 12M18 6L6 18"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  />
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M6 6l12 12M18 6L6 18" />
                 </svg>
               </button>
             </div>
 
-            {/* Danh mục */}
+            {/* Danh mục menu */}
             <nav className="px-4">
-              <ul className="pb-5">
-                <div className="py-5" />
+              <ul className="pt-5 space-y-4">
                 {NAV.map(({ label, to }) => {
                   const active = pathname === to;
                   return (
-                    <li key={label} className="mb-1">
+                    <li key={label}>
                       <NavLink
                         to={to}
                         onClick={() => setOpen(false)}
-                        className="block py-1 text-[16px] leading-[22px]"
+                        className="block text-[16px] leading-[22px] text-white/90 hover:text-white"
                       >
                         <span className="font-medium">{label}</span>
                         {active && (
@@ -117,7 +124,7 @@ export default function HeaderMobile() {
               </ul>
             </nav>
 
-            {/* CTA Đăng nhập (cố định dưới cùng) */}
+            {/* Nút đăng nhập */}
             <div className="absolute left-0 right-0 bottom-0 px-4 pb-6">
               <button className="w-full h-[44px] rounded-full bg-[#03B72A] text-white font-medium">
                 {t("auth.login") || "Đăng nhập"}
