@@ -45,7 +45,7 @@ export default function HeaderMobile() {
             <img
               src={logo}
               alt="Heineken"
-              className="block w-[63px] h-[32px] object-contain"
+              className="block w-[63px] h-[70px] object-contain"
             />
           </NavLink>
 
