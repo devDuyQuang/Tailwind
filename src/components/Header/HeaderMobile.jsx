@@ -98,7 +98,7 @@ export default function HeaderMobile() {
                   <path d="M6 6l12 12M18 6L6 18" />
                 </svg>
               </button>
-              <img src={logo} alt="Heineken" className="h-[24px] w-auto" />
+              <img src={logo} alt="Heineken" className="h-[40px] w-auto" />
             </div>
 
             {/* Nội dung: padding top/bottom 24, left/right 16, gap 8 */}
