@@ -1,3 +1,4 @@
+// src/components/Header/HeaderMobile.jsx
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -19,7 +20,6 @@ export default function HeaderMobile() {
   const [open, setOpen] = useState(false);
   const panelRef = useRef(null);
 
-  // đóng khi click ngoài / nhấn ESC
   useEffect(() => {
     const onDoc = (e) => {
       if (open && panelRef.current && !panelRef.current.contains(e.target)) {
@@ -38,9 +38,9 @@ export default function HeaderMobile() {
   return (
     <header className="bg-[#020D07] z-[3] lg:hidden border-b border-[#0E1A13]">
       <div className="container px-4">
-        {/* Header height = 72px, padding top/bottom 20px */}
+        {/* Header mobile: 72px */}
         <div className="h-[72px] flex items-center justify-between">
-          {/* Logo Heineken 63×32 */}
+          {/* Logo 63x32 bên trái */}
           <NavLink to="/" className="flex items-center">
             <img
               src={logo}
@@ -49,7 +49,7 @@ export default function HeaderMobile() {
             />
           </NavLink>
 
-          {/* Nút menu 24×24, bo tròn 8px */}
+          {/* Menu 24x24 bo 8px bên phải */}
           <button
             aria-label="Mở menu"
             className="flex items-center justify-center w-[24px] h-[24px] rounded-[8px] text-white hover:bg-white/10 transition-colors"
@@ -69,7 +69,7 @@ export default function HeaderMobile() {
         </div>
       </div>
 
-      {/* Overlay + Panel trượt từ phải */}
+      {/* Drawer */}
       {open && (
         <div className="fixed inset-0 z-50">
           <div
@@ -78,11 +78,10 @@ export default function HeaderMobile() {
           />
           <aside
             ref={panelRef}
-            className="absolute right-0 top-0 h-full w-[85%] max-w-[343px] bg-[#0A160F] text-white shadow-xl transition-transform duration-300"
+            className="absolute right-0 top-0 h-full w-[85%] max-w-[343px] bg-[#0A160F] text-white shadow-xl"
           >
-            {/* Header trong panel */}
-            <div className="h-[56px] flex items-center justify-between px-4 border-b border-white/10">
-              <img src={logo} alt="Heineken" className="h-[24px] w-auto" />
+            {/* Header của drawer: 72px, X trái, logo phải */}
+            <div className="h-[72px] flex items-center justify-between px-4">
               <button
                 aria-label="Đóng menu"
                 className="flex items-center justify-center w-[24px] h-[24px] rounded-[8px] hover:bg-white/10"
@@ -99,36 +98,52 @@ export default function HeaderMobile() {
                   <path d="M6 6l12 12M18 6L6 18" />
                 </svg>
               </button>
+              <img src={logo} alt="Heineken" className="h-[24px] w-auto" />
             </div>
 
-            {/* Danh mục menu */}
-            <nav className="px-4">
-              <ul className="pt-5 space-y-4">
+            {/* Nội dung: padding top/bottom 24, left/right 16, gap 8 */}
+            <div className="px-4 pt-6 pb-6">
+              <nav className="space-y-2">
                 {NAV.map(({ label, to }) => {
                   const active = pathname === to;
                   return (
-                    <li key={label}>
-                      <NavLink
-                        to={to}
-                        onClick={() => setOpen(false)}
-                        className="block text-[16px] leading-[22px] text-white/90 hover:text-white"
-                      >
-                        <span className="font-medium">{label}</span>
-                        {active && (
-                          <span className="block h-[4px] w-[40px] rounded-full bg-[#03B72A] mt-2" />
-                        )}
-                      </NavLink>
-                    </li>
+                    <NavLink
+                      key={label}
+                      to={to}
+                      onClick={() => setOpen(false)}
+                      className="block w-[300px] h-[56px] px-6 py-3 rounded-md"
+                    >
+                      {/* frame 83x32: text + underline */}
+                      <div className="h-[32px] flex flex-col justify-center items-start gap-2">
+                        <span className="text-[16px] leading-[22px] text-white/90 font-medium">
+                          {label}
+                        </span>
+                      </div>
+                      {active && (
+                        <span
+                          className="block mt-2 h-[4px] w-[40px] rounded-[76px] bg-[#03B72A]"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </NavLink>
                   );
                 })}
-              </ul>
-            </nav>
+              </nav>
 
-            {/* Nút đăng nhập */}
-            <div className="absolute left-0 right-0 bottom-0 px-4 pb-6">
-              <button className="w-full h-[44px] rounded-full bg-[#03B72A] text-white font-medium">
-                {t("auth.login") || "Đăng nhập"}
-              </button>
+              {/* Khối “icons/CTA”: padding 20/16/20/16, gap 12 */}
+              <div className="pt-5" />
+              <div className="px-4 py-5 flex flex-col gap-3">
+                <button className="w-full h-[44px] rounded-full bg-[#03B72A] text-white font-medium">
+                  {t("auth.login") || "Đăng nhập"}
+                </button>
+                <button
+                  type="button"
+                  className="w-full text-center text-white/80 text-[14px] leading-[20px]"
+                  onClick={() => setOpen(false)}
+                >
+                  {t("auth.signup") || "Đăng ký"}
+                </button>
+              </div>
             </div>
           </aside>
         </div>
