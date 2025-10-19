@@ -134,14 +134,14 @@ export default function HeaderMobile() {
               <div className="pt-5" />
               <div className="px-4 py-5 flex flex-col gap-3">
                 <button className="w-full h-[44px] rounded-full bg-[#03B72A] text-white font-medium">
-                  {t("auth.login") || "Đăng nhập"}
+                  {t("Đăng nhập") || "Đăng nhập"}
                 </button>
                 <button
                   type="button"
-                  className="w-full text-center text-white/80 text-[14px] leading-[20px]"
+                  className="w-full h-[44px] rounded-full bg-[#03B72A] text-white font-medium"
                   onClick={() => setOpen(false)}
                 >
-                  {t("auth.signup") || "Đăng ký"}
+                  {t("Đăng Ký") || "Đăng ký"}
                 </button>
               </div>
             </div>
