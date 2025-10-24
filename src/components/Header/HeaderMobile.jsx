@@ -20,6 +20,7 @@ export default function HeaderMobile() {
   const [open, setOpen] = useState(false);
   const panelRef = useRef(null);
 
+  // đóng when click outside / ESC
   useEffect(() => {
     const onDoc = (e) => {
       if (open && panelRef.current && !panelRef.current.contains(e.target)) {
@@ -40,12 +41,12 @@ export default function HeaderMobile() {
       <div className="container px-4">
         {/* Header mobile: 72px */}
         <div className="h-[72px] flex items-center justify-between">
-          {/* Logo 63x32 bên trái */}
+          {/* Logo trái (theo yêu cầu: 96x49) */}
           <NavLink to="/" className="flex items-center">
             <img
               src={logo}
               alt="Heineken"
-              className="block w-[63px] h-[70px] object-contain"
+              className="block w-[96px] h-[49px] object-contain"
             />
           </NavLink>
 
@@ -80,7 +81,7 @@ export default function HeaderMobile() {
             ref={panelRef}
             className="absolute right-0 top-0 h-full w-[85%] max-w-[343px] bg-[#0A160F] text-white shadow-xl"
           >
-            {/* Header của drawer: 72px, X trái, logo phải */}
+            {/* Header drawer: 72px, X trái, logo phải */}
             <div className="h-[72px] flex items-center justify-between px-4">
               <button
                 aria-label="Đóng menu"
@@ -101,9 +102,9 @@ export default function HeaderMobile() {
               <img src={logo} alt="Heineken" className="h-[40px] w-auto" />
             </div>
 
-            {/* Nội dung: padding top/bottom 24, left/right 16, gap 8 */}
-            <div className="px-4 pt-6 pb-6">
-              <nav className="space-y-2">
+            {/* Content 300×389 bám mép phải (items-end + ml-auto) */}
+            <div className="px-4">
+              <div className="ml-auto w-[300px] h-[389px] flex flex-col justify-center items-end py-6 gap-2">
                 {NAV.map(({ label, to }) => {
                   const active = pathname === to;
                   return (
@@ -111,9 +112,9 @@ export default function HeaderMobile() {
                       key={label}
                       to={to}
                       onClick={() => setOpen(false)}
-                      className="block w-[300px] h-[56px] px-6 py-3 rounded-md"
+                      className="block w-full h-[56px] px-6 py-3 text-left"
                     >
-                      {/* frame 83x32: text + underline */}
+                      {/* Frame 83×32: text + underline (text vẫn căn trái) */}
                       <div className="h-[32px] flex flex-col justify-center items-start gap-2">
                         <span className="text-[16px] leading-[22px] text-white/90 font-medium">
                           {label}
@@ -128,21 +129,16 @@ export default function HeaderMobile() {
                     </NavLink>
                   );
                 })}
-              </nav>
 
-              {/* Khối “icons/CTA”: padding 20/16/20/16, gap 12 */}
-              <div className="pt-5" />
-              <div className="px-4 py-5 flex flex-col gap-3">
-                <button className="w-full h-[44px] rounded-full bg-[#03B72A] text-white font-medium">
-                  {t("Đăng nhập") || "Đăng nhập"}
-                </button>
-                <button
-                  type="button"
-                  className="w-full h-[44px] rounded-full bg-[#03B72A] text-white font-medium"
-                  onClick={() => setOpen(false)}
-                >
-                  {t("Đăng Ký") || "Đăng ký"}
-                </button>
+                {/* CTA ở dưới khối content (nếu muốn bám đáy panel có thể chuyển ra absolute) */}
+                <div className="w-full px-2 pt-4 space-y-3">
+                  <button className="w-full h-[44px] rounded-full bg-[#03B72A] text-white font-medium">
+                    {t("auth.login") || "Đăng nhập"}
+                  </button>
+                  <button className="w-full h-[44px] rounded-full border border-white/20 text-white/90">
+                    {t("auth.signup") || "Đăng ký"}
+                  </button>
+                </div>
               </div>
             </div>
           </aside>
