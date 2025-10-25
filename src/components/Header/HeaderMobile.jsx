@@ -1,5 +1,4 @@
 // src/components/Header/HeaderMobile.jsx
-
 import flagVN from "../../assets/image-38.png";
 import flagEN from "../../assets/uk.png";
 import flagCZ from "../../assets/czech.png";
@@ -22,11 +21,20 @@ export default function HeaderMobile() {
     { label: t("nav.contact"), to: "/contact" },
   ];
 
+  // ----- Language config (vi / en / cs) -----
+  const LANGS = {
+    vi: { code: "vi", short: "VN", name: "Tiếng Việt", flag: flagVN },
+    en: { code: "en", short: "EN", name: "English", flag: flagEN },
+    cs: { code: "cs", short: "CZ", name: "Čeština", flag: flagCZ }, // Czech
+  };
+  const curCode = (i18n.language || "en").slice(0, 2);
+  const curLang = LANGS[curCode] || LANGS.en;
+
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const panelRef = useRef(null);
 
-  // Đóng drawer khi click ra ngoài hoặc nhấn ESC
+  // Đóng khi click ra ngoài / nhấn ESC
   useEffect(() => {
     const onDoc = (e) => {
       if (open && panelRef.current && !panelRef.current.contains(e.target)) {
@@ -50,7 +58,7 @@ export default function HeaderMobile() {
 
   // Đổi ngôn ngữ
   const setLang = (lng) => {
-    i18n.changeLanguage(lng);
+    i18n.changeLanguage(lng); // dùng 'cs' cho Séc
     setLangOpen(false);
   };
 
@@ -60,15 +68,12 @@ export default function HeaderMobile() {
     setLangOpen(false);
   }, [pathname]);
 
-  const currentLang = i18n.language?.startsWith("vi") ? "VN" : "EN";
-  const currentFlag = i18n.language?.startsWith("vi") ? "🇻🇳" : "🇺🇸";
-
   return (
     <header className="bg-[#020D07] z-[3] lg:hidden border-b border-[#0E1A13]">
       <div className="container px-4">
         {/* Header mobile: 72px */}
         <div className="h-[72px] flex items-center justify-between">
-          {/* Logo trái – theo yêu cầu: 96×49 */}
+          {/* Logo trái – test 96×49 */}
           <NavLink to="/" className="flex items-center">
             <img
               src={logo}
@@ -110,7 +115,7 @@ export default function HeaderMobile() {
             ref={panelRef}
             className="absolute right-0 top-0 h-full w-[85%] max-w-[343px] bg-[#0A160F] text-white shadow-xl"
           >
-            {/* Header của drawer: 72px, nút X bên trái, logo bên phải */}
+            {/* Header drawer: 72px, X trái, logo phải */}
             <div className="h-[72px] flex items-center justify-between px-4">
               <button
                 aria-label="Đóng menu"
@@ -131,7 +136,7 @@ export default function HeaderMobile() {
               <img src={logo} alt="Heineken" className="h-[40px] w-auto" />
             </div>
 
-            {/* Content 300×389 bám mép phải (items-end + ml-auto) */}
+            {/* Content 300×389 bám mép phải */}
             <div className="px-4">
               <div className="ml-auto w-[300px] h-[389px] flex flex-col justify-center items-end py-6 gap-2 relative">
                 {/* Danh mục */}
@@ -141,26 +146,22 @@ export default function HeaderMobile() {
                     <NavLink
                       key={label}
                       to={to}
+                      onClick={() => setOpen(false)}
                       className="block w-full h-[56px] px-6 py-3 text-left"
                     >
-                      {/* Frame 83×32: text + underline */}
                       <div className="h-[32px] flex flex-col justify-center items-start gap-2">
                         <span className="text-[16px] leading-[22px] text-white/90 font-medium">
                           {label}
                         </span>
                       </div>
                       {active && (
-                        <span
-                          className="block mt-2 h-[4px] w-[40px] rounded-[76px] bg-[#03B72A]"
-                          aria-hidden="true"
-                        />
+                        <span className="block mt-2 h-[4px] w-[40px] rounded-[76px] bg-[#03B72A]" />
                       )}
                     </NavLink>
                   );
                 })}
 
-                {/* Language row (theo Figma: ~300×53, padding 12/24/12/24) */}
-                {/* Language row (theo Figma: icon 24x24 + VN + caret) */}
+                {/* Language (24×24 flag + code + caret) */}
                 <div className="w-full">
                   <div className="w-[300px] h-[53px] px-6 py-3 mx-auto">
                     <div className="relative">
@@ -171,18 +172,12 @@ export default function HeaderMobile() {
                         style={{ cursor: "pointer" }}
                       >
                         <img
-                          src={
-                            i18n.language?.startsWith("vi")
-                              ? flagVN
-                              : flagEN
-                              ? flagEN
-                              : flagCZ
-                          }
-                          alt="flag"
+                          src={curLang.flag}
+                          alt={curLang.name}
                           className="w-[24px] h-[24px] object-contain"
                         />
                         <span className="font-medium select-none">
-                          {currentLang}
+                          {curLang.short}
                         </span>
                         <svg
                           width="14"
@@ -201,41 +196,28 @@ export default function HeaderMobile() {
 
                       {langOpen && (
                         <ul className="absolute left-0 mt-2 w-[160px] rounded-[10px] bg-[#142019] ring-1 ring-white/10 shadow-lg overflow-hidden z-10">
-                          <li>
-                            <button
-                              className="w-full text-left px-3 py-2 hover:bg-white/5 flex items-center gap-2"
-                              onClick={() => setLang("vi")}
-                            >
-                              <span className="text-lg">🇻🇳</span>
-                              <span>Tiếng Việt</span>
-                            </button>
-                          </li>
-                          <li>
-                            <button
-                              className="w-full text-left px-3 py-2 hover:bg-white/5 flex items-center gap-2"
-                              onClick={() => setLang("en")}
-                            >
-                              <span className="text-lg">🇺🇸</span>
-                              <span>English</span>
-                            </button>
-                          </li>
-
-                          <li>
-                            <button
-                              className="w-full text-left px-3 py-2 hover:bg-white/5 flex items-center gap-2"
-                              onClick={() => setLang("cz")}
-                            >
-                              <span className="text-lg">cz</span>
-                              <span>čeština</span>
-                            </button>
-                          </li>
+                          {Object.values(LANGS).map(({ code, name, flag }) => (
+                            <li key={code}>
+                              <button
+                                className="w-full text-left px-3 py-2 hover:bg-white/5 flex items-center gap-2"
+                                onClick={() => setLang(code)}
+                              >
+                                <img
+                                  src={flag}
+                                  alt={name}
+                                  className="w-[20px] h-[20px] object-contain"
+                                />
+                                <span>{name}</span>
+                              </button>
+                            </li>
+                          ))}
                         </ul>
                       )}
                     </div>
                   </div>
                 </div>
 
-                {/* CTA trong khối content */}
+                {/* CTA */}
                 <div className="w-full px-2 pt-4 space-y-3">
                   <button className="w-full h-[44px] rounded-full bg-[#03B72A] text-white font-medium">
                     {t("auth.login") || "Đăng nhập"}
