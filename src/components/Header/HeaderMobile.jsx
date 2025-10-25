@@ -2,6 +2,7 @@
 
 import flagVN from "../../assets/image-38.png";
 import flagEN from "../../assets/uk.png";
+import flagCZ from "../../assets/czech.png";
 
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -171,7 +172,11 @@ export default function HeaderMobile() {
                       >
                         <img
                           src={
-                            i18n.language?.startsWith("vi") ? flagVN : flagEN
+                            i18n.language?.startsWith("vi")
+                              ? flagVN
+                              : flagEN
+                              ? flagEN
+                              : flagCZ
                           }
                           alt="flag"
                           className="w-[24px] h-[24px] object-contain"
@@ -212,6 +217,16 @@ export default function HeaderMobile() {
                             >
                               <span className="text-lg">🇺🇸</span>
                               <span>English</span>
+                            </button>
+                          </li>
+
+                          <li>
+                            <button
+                              className="w-full text-left px-3 py-2 hover:bg-white/5 flex items-center gap-2"
+                              onClick={() => setLang("en")}
+                            >
+                              <span className="text-lg">🇺🇸</span>
+                              <span>čeština</span>
                             </button>
                           </li>
                         </ul>
