@@ -223,9 +223,9 @@ export default function HeaderMobile() {
                           <li>
                             <button
                               className="w-full text-left px-3 py-2 hover:bg-white/5 flex items-center gap-2"
-                              onClick={() => setLang("en")}
+                              onClick={() => setLang("cz")}
                             >
-                              <span className="text-lg">🇺🇸</span>
+                              <span className="text-lg">cz</span>
                               <span>čeština</span>
                             </button>
                           </li>
