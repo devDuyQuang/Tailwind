@@ -47,9 +47,10 @@ export default function HeaderMobile() {
     };
   }, [open]);
 
-  // Đổi ngôn ngữ
+  // Đổi ngôn ngữ (hỗ trợ cả 'cs' và 'cz' – i18n thường dùng 'cs')
   const setLang = (lng) => {
-    i18n.changeLanguage(lng);
+    const code = lng === "cz" ? "cs" : lng;
+    i18n.changeLanguage(code);
     setLangOpen(false);
   };
 
@@ -59,18 +60,12 @@ export default function HeaderMobile() {
     setLangOpen(false);
   }, [pathname]);
 
-  // UI hiện tại
-  const currentLang = i18n.language?.startsWith("vi")
-    ? "VN"
-    : i18n.language?.startsWith("cz")
-    ? "CZ"
-    : "EN";
-
-  const currentFlagSrc = i18n.language?.startsWith("vi")
-    ? flagVN
-    : i18n.language?.startsWith("cz")
-    ? flagCZ
-    : flagEN;
+  // Phát hiện ngôn ngữ hiện tại
+  const isVI = i18n.language?.startsWith("vi");
+  const isCS =
+    i18n.language?.startsWith("cs") || i18n.language?.startsWith("cz");
+  const currentLang = isVI ? "VN" : isCS ? "CZ" : "EN";
+  const currentFlagSrc = isVI ? flagVN : isCS ? flagCZ : flagEN;
 
   return (
     <header className="bg-[#020D07] z-[3] lg:hidden border-b border-[#0E1A13]">
@@ -141,28 +136,45 @@ export default function HeaderMobile() {
             {/* ===== BODY (khung Content 300×389) ===== */}
             <div className="flex-1 overflow-y-auto px-4">
               <div className="ml-auto w-[300px] h-[389px] flex flex-col justify-center items-end py-6 gap-2">
-                {/* Nav items */}
-                {NAV.map(({ label, to }) => (
-                  <NavLink
-                    key={label}
-                    to={to}
-                    className="block w-full h-[56px] px-6 py-3 text-left"
-                    onClick={() => {
-                      setOpen(false);
-                      setLangOpen(false);
-                    }}
-                  >
-                    <div className="h-[32px] flex flex-col justify-center items-start gap-2">
-                      <span className="text-[16px] leading-[22px] text-white/90 font-medium">
-                        {label}
-                      </span>
-                    </div>
-                    {/* underline chỉ hiện khi active: bạn có thể dùng NavLink render-prop nếu muốn */}
-                    {/* <span className="block mt-2 h-[4px] w-[40px] rounded-[76px] bg-[#03B72A]" /> */}
-                  </NavLink>
-                ))}
+                {/* Nav items + underline theo ĐỘ DÀI TỪ ĐẦU TIÊN */}
+                {NAV.map(({ label, to }) => {
+                  const active = pathname === to;
+                  const [first, ...restArr] = label.split(" ");
+                  const rest = restArr.join(" ");
+                  return (
+                    <NavLink
+                      key={label}
+                      to={to}
+                      className="block w-full h-[56px] px-6 py-3 text-left"
+                      onClick={() => {
+                        setOpen(false);
+                        setLangOpen(false);
+                      }}
+                    >
+                      <div className="h-[32px] flex items-center gap-1">
+                        {/* từ đầu tiên: underline bám đúng chiều rộng chữ */}
+                        <span
+                          className={
+                            "inline-block relative leading-[22px] text-[16px] font-medium " +
+                            (active
+                              ? "after:content-[''] after:absolute after:left-0 after:top-full after:mt-2 after:block after:h-[4px] after:w-full after:rounded-full after:bg-[#03B72A]"
+                              : "")
+                          }
+                        >
+                          {first}
+                        </span>
+                        {/* các từ còn lại (không ảnh hưởng underline) */}
+                        {rest && (
+                          <span className="leading-[22px] text-[16px] font-medium">
+                            {rest}
+                          </span>
+                        )}
+                      </div>
+                    </NavLink>
+                  );
+                })}
 
-                {/* Dòng chọn ngôn ngữ (nằm TRONG khung Content) */}
+                {/* Dòng chọn ngôn ngữ (trong khung Content) */}
                 <div className="w-full px-6 py-3">
                   <div className="relative">
                     <button
@@ -192,7 +204,7 @@ export default function HeaderMobile() {
                     </button>
 
                     {langOpen && (
-                      <ul className="absolute left-0 mt-2 w-[160px] rounded-[10px] bg-[#142019] ring-1 ring-white/10 shadow-lg overflow-hidden z-10">
+                      <ul className="absolute left-0 mt-2 w-[170px] rounded-[10px] bg-[#142019] ring-1 ring-white/10 shadow-lg overflow-hidden z-10">
                         <li>
                           <button
                             className="w-full text-left px-3 py-2 hover:bg-white/5 flex items-center gap-2"
@@ -222,7 +234,7 @@ export default function HeaderMobile() {
                         <li>
                           <button
                             className="w-full text-left px-3 py-2 hover:bg-white/5 flex items-center gap-2"
-                            onClick={() => setLang("cz")}
+                            onClick={() => setLang("cs")} // dùng mã 'cs' cho Séc
                           >
                             <img
                               src={flagCZ}
