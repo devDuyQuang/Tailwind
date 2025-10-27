@@ -185,7 +185,7 @@ export default function HeaderMobile() {
                       <img
                         src={currentFlagSrc}
                         alt={currentLang}
-                        className="w-[24px] h-[24px] object-contain"
+                        className="w-[24px] h-[24px] object-cover rounded-full border border-white/10"
                       />
                       <span className="font-medium">{currentLang}</span>
                       <svg
