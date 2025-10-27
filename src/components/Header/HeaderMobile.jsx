@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logoken.png";
 
 export default function HeaderMobile() {
   const { t, i18n } = useTranslation("common");
@@ -81,7 +81,7 @@ export default function HeaderMobile() {
             <img
               src={logo}
               alt="Heineken"
-              className="block w-[96px] h-[49px] object-contain"
+              className="block w-[63px] h-[32px] object-contain"
             />
           </NavLink>
 
