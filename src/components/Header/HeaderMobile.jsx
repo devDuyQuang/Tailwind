@@ -25,7 +25,7 @@ export default function HeaderMobile() {
   const [langOpen, setLangOpen] = useState(false);
   const panelRef = useRef(null);
 
-  // Đóng khi click ngoài / ESC
+  // Đóng khi click ngoài / nhấn ESC
   useEffect(() => {
     const onDoc = (e) => {
       if (open && panelRef.current && !panelRef.current.contains(e.target)) {
@@ -47,7 +47,7 @@ export default function HeaderMobile() {
     };
   }, [open]);
 
-  // Đổi ngôn ngữ (hỗ trợ cả 'cs' và 'cz' – i18n thường dùng 'cs')
+  // Đổi ngôn ngữ (map 'cz' -> 'cs')
   const setLang = (lng) => {
     const code = lng === "cz" ? "cs" : lng;
     i18n.changeLanguage(code);
@@ -60,7 +60,7 @@ export default function HeaderMobile() {
     setLangOpen(false);
   }, [pathname]);
 
-  // Phát hiện ngôn ngữ hiện tại
+  // Ngôn ngữ hiện tại
   const isVI = i18n.language?.startsWith("vi");
   const isCS =
     i18n.language?.startsWith("cs") || i18n.language?.startsWith("cz");
@@ -70,8 +70,9 @@ export default function HeaderMobile() {
   return (
     <header className="bg-[#020D07] z-[3] lg:hidden border-b border-[#0E1A13]">
       <div className="container px-4">
-        {/* Thanh header (72px) */}
+        {/* Header mobile: 72px */}
         <div className="h-[72px] flex items-center justify-between">
+          {/* Logo trái */}
           <NavLink to="/" className="flex items-center">
             <img
               src={logo}
@@ -80,6 +81,7 @@ export default function HeaderMobile() {
             />
           </NavLink>
 
+          {/* Nút menu phải */}
           <button
             aria-label="Mở menu"
             className="flex items-center justify-center w-[24px] h-[24px] rounded-[8px] text-white hover:bg-white/10 transition-colors"
@@ -107,6 +109,7 @@ export default function HeaderMobile() {
               setLangOpen(false);
             }}
           />
+
           {/* Panel */}
           <aside
             ref={panelRef}
@@ -136,7 +139,7 @@ export default function HeaderMobile() {
             {/* ===== BODY (khung Content 300×389) ===== */}
             <div className="flex-1 overflow-y-auto px-4">
               <div className="ml-auto w-[300px] h-[389px] flex flex-col justify-center items-end py-6 gap-2">
-                {/* Nav items + underline theo ĐỘ DÀI TỪ ĐẦU TIÊN */}
+                {/* Nav items với underline chỉ ở từ đầu tiên */}
                 {NAV.map(({ label, to }) => {
                   const active = pathname === to;
                   const [first, ...restArr] = label.split(" ");
@@ -152,7 +155,6 @@ export default function HeaderMobile() {
                       }}
                     >
                       <div className="h-[32px] flex items-center gap-1">
-                        {/* từ đầu tiên: underline bám đúng chiều rộng chữ */}
                         <span
                           className={
                             "inline-block relative leading-[22px] text-[16px] font-medium " +
@@ -163,7 +165,6 @@ export default function HeaderMobile() {
                         >
                           {first}
                         </span>
-                        {/* các từ còn lại (không ảnh hưởng underline) */}
                         {rest && (
                           <span className="leading-[22px] text-[16px] font-medium">
                             {rest}
@@ -174,7 +175,7 @@ export default function HeaderMobile() {
                   );
                 })}
 
-                {/* Dòng chọn ngôn ngữ (trong khung Content) */}
+                {/* Dòng chọn ngôn ngữ (nằm TRONG khung Content) */}
                 <div className="w-full px-6 py-3">
                   <div className="relative">
                     <button
@@ -213,7 +214,7 @@ export default function HeaderMobile() {
                             <img
                               src={flagVN}
                               alt="VN"
-                              className="w-[18px] h-[18px]"
+                              className="w-[18px] h-[18px] object-cover rounded-full border border-white/10"
                             />
                             <span>Tiếng Việt</span>
                           </button>
@@ -226,7 +227,7 @@ export default function HeaderMobile() {
                             <img
                               src={flagEN}
                               alt="EN"
-                              className="w-[18px] h-[18px]"
+                              className="w-[18px] h-[18px] object-cover rounded-full border border-white/10"
                             />
                             <span>English</span>
                           </button>
@@ -234,12 +235,12 @@ export default function HeaderMobile() {
                         <li>
                           <button
                             className="w-full text-left px-3 py-2 hover:bg-white/5 flex items-center gap-2"
-                            onClick={() => setLang("cs")} // dùng mã 'cs' cho Séc
+                            onClick={() => setLang("cs")} // mã chuẩn cho Séc
                           >
                             <img
                               src={flagCZ}
                               alt="CZ"
-                              className="w-[18px] h-[18px]"
+                              className="w-[18px] h-[18px] object-cover rounded-full border border-white/10"
                             />
                             <span>Čeština</span>
                           </button>
@@ -254,10 +255,10 @@ export default function HeaderMobile() {
             {/* ===== FOOTER CTA (KHUNG RIÊNG, ngoài Content) ===== */}
             <div className="px-4 pb-6">
               <button className="w-full h-[44px] rounded-full bg-[#03B72A] text-white font-medium">
-                {t("auth.login") || "Đăng nhập"}
+                {t("Đăng nhập") || "Đăng nhập"}
               </button>
               <button className="w-full h-[44px] rounded-full mt-3 border border-white/20 text-white/90">
-                {t("auth.signup") || "Đăng ký"}
+                {t("Đăng Ký") || "Đăng ký"}
               </button>
             </div>
           </aside>
