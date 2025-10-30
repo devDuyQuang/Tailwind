@@ -25,7 +25,29 @@ export default function HeaderMobile() {
   const [langOpen, setLangOpen] = useState(false);
   const panelRef = useRef(null);
 
-  // Đóng khi click ngoài / nhấn ESC
+  // ── Config ngôn ngữ ở 1 nơi ─────────────────────────────
+  const LANGS = {
+    vi: { code: "vi", short: "VN", label: "Tiếng Việt", flag: flagVN },
+    en: { code: "en", short: "EN", label: "English", flag: flagEN },
+    cs: { code: "cs", short: "CZ", label: "Čeština", flag: flagCZ }, // Czech
+  };
+
+  // Chuẩn hoá code hiện tại (nhận cả 'cz' → 'cs')
+  const raw = i18n.language || "vi";
+  const curCode = raw.startsWith("vi")
+    ? "vi"
+    : raw.startsWith("cs") || raw.startsWith("cz")
+    ? "cs"
+    : "en";
+  const current = LANGS[curCode];
+
+  const setLang = (lng) => {
+    const code = lng === "cz" ? "cs" : lng;
+    i18n.changeLanguage(code);
+    setLangOpen(false);
+  };
+
+  // Đóng khi click ngoài / ESC
   useEffect(() => {
     const onDoc = (e) => {
       if (open && panelRef.current && !panelRef.current.contains(e.target)) {
@@ -47,32 +69,16 @@ export default function HeaderMobile() {
     };
   }, [open]);
 
-  // Đổi ngôn ngữ (map 'cz' -> 'cs')
-  const setLang = (lng) => {
-    const code = lng === "cz" ? "cs" : lng;
-    i18n.changeLanguage(code);
-    setLangOpen(false);
-  };
-
-  // Đóng drawer khi đổi route
+  // Đổi route thì đóng panel
   useEffect(() => {
     setOpen(false);
     setLangOpen(false);
   }, [pathname]);
 
-  // Ngôn ngữ hiện tại
-  const isVI = i18n.language?.startsWith("vi");
-  const isCS =
-    i18n.language?.startsWith("cs") || i18n.language?.startsWith("cz");
-  const currentLang = isVI ? "VN" : isCS ? "CZ" : "EN";
-  const currentFlagSrc = isVI ? flagVN : isCS ? flagCZ : flagEN;
-
   return (
     <header className="bg-[#020D07] z-[3] lg:hidden border-b border-[#0E1A13]">
       <div className="container px-4">
-        {/* Header mobile: 72px */}
         <div className="h-[72px] flex items-center justify-between">
-          {/* Logo trái */}
           <NavLink to="/" className="flex items-center">
             <img
               src={logo}
@@ -81,7 +87,6 @@ export default function HeaderMobile() {
             />
           </NavLink>
 
-          {/* Nút menu phải */}
           <button
             aria-label="Mở menu"
             className="flex items-center justify-center w-[24px] h-[24px] rounded-[8px] text-white hover:bg-white/10 transition-colors"
@@ -98,10 +103,8 @@ export default function HeaderMobile() {
         </div>
       </div>
 
-      {/* Drawer */}
       {open && (
         <div className="fixed inset-0 z-50">
-          {/* Overlay */}
           <div
             className="absolute inset-0 bg-black/50"
             onClick={() => {
@@ -109,8 +112,6 @@ export default function HeaderMobile() {
               setLangOpen(false);
             }}
           />
-
-          {/* Panel */}
           <aside
             ref={panelRef}
             className="absolute right-0 top-0 h-full w-[85%] max-w-[343px] bg-[#0A160F] text-white shadow-xl flex flex-col"
@@ -136,10 +137,9 @@ export default function HeaderMobile() {
               <img src={logo} alt="Heineken" className="h-[40px] w-auto" />
             </div>
 
-            {/* ===== BODY (khung Content 300×389) ===== */}
+            {/* BODY: bám trái, không dùng transform → không vỡ layout */}
             <div className="flex-1 overflow-y-auto px-4">
-              <div className="ml-auto w-[300px] h-[389px] flex flex-col justify-center items-end py-6 gap-2">
-                {/* Nav items với underline chỉ ở từ đầu tiên */}
+              <div className="w-full max-w-[300px] h-[389px] flex flex-col justify-center items-start py-6 gap-2">
                 {NAV.map(({ label, to }) => {
                   const active = pathname === to;
                   const [first, ...restArr] = label.split(" ");
@@ -175,7 +175,7 @@ export default function HeaderMobile() {
                   );
                 })}
 
-                {/* Dòng chọn ngôn ngữ (nằm TRONG khung Content) */}
+                {/* Language row (chỉ hiện NGÔN NGỮ KHÁC) */}
                 <div className="w-full px-6 py-3">
                   <div className="relative">
                     <button
@@ -184,11 +184,11 @@ export default function HeaderMobile() {
                       className="flex items-center gap-2 text-[16px] leading-[22px] text-white/90 hover:text-white"
                     >
                       <img
-                        src={currentFlagSrc}
-                        alt={currentLang}
+                        src={current.flag}
+                        alt={current.short}
                         className="w-[24px] h-[24px] object-cover rounded-full border border-white/10"
                       />
-                      <span className="font-medium">{currentLang}</span>
+                      <span className="font-medium">{current.short}</span>
                       <svg
                         width="14"
                         height="14"
@@ -206,45 +206,23 @@ export default function HeaderMobile() {
 
                     {langOpen && (
                       <ul className="absolute left-0 mt-2 w-[170px] rounded-[10px] bg-[#142019] ring-1 ring-white/10 shadow-lg overflow-hidden z-10">
-                        <li>
-                          <button
-                            className="w-full text-left px-3 py-2 hover:bg-white/5 flex items-center gap-2"
-                            onClick={() => setLang("vi")}
-                          >
-                            <img
-                              src={flagVN}
-                              alt="VN"
-                              className="w-[18px] h-[18px] object-cover rounded-full border border-white/10"
-                            />
-                            <span>Tiếng Việt</span>
-                          </button>
-                        </li>
-                        <li>
-                          <button
-                            className="w-full text-left px-3 py-2 hover:bg-white/5 flex items-center gap-2"
-                            onClick={() => setLang("en")}
-                          >
-                            <img
-                              src={flagEN}
-                              alt="EN"
-                              className="w-[18px] h-[18px] object-cover rounded-full border border-white/10"
-                            />
-                            <span>English</span>
-                          </button>
-                        </li>
-                        <li>
-                          <button
-                            className="w-full text-left px-3 py-2 hover:bg-white/5 flex items-center gap-2"
-                            onClick={() => setLang("cs")} // mã chuẩn cho Séc
-                          >
-                            <img
-                              src={flagCZ}
-                              alt="CZ"
-                              className="w-[18px] h-[18px] object-cover rounded-full border border-white/10"
-                            />
-                            <span>Čeština</span>
-                          </button>
-                        </li>
+                        {Object.values(LANGS)
+                          .filter((lng) => lng.code !== current.code)
+                          .map((lng) => (
+                            <li key={lng.code}>
+                              <button
+                                className="w-full text-left px-3 py-2 hover:bg-white/5 flex items-center gap-2"
+                                onClick={() => setLang(lng.code)}
+                              >
+                                <img
+                                  src={lng.flag}
+                                  alt={lng.short}
+                                  className="w-[18px] h-[18px] object-cover rounded-full border border-white/10"
+                                />
+                                <span>{lng.label}</span>
+                              </button>
+                            </li>
+                          ))}
                       </ul>
                     )}
                   </div>
@@ -252,7 +230,7 @@ export default function HeaderMobile() {
               </div>
             </div>
 
-            {/* ===== FOOTER CTA (KHUNG RIÊNG, ngoài Content) ===== */}
+            {/* FOOTER CTA – khung riêng, không dính BODY */}
             <div className="px-4 pb-6">
               <button className="w-full h-[44px] rounded-full bg-[#03B72A] text-white font-medium">
                 {t("Đăng nhập") || "Đăng nhập"}
