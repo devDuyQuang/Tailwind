@@ -1,72 +1,59 @@
-import React from "react";
+// src/components/Main/Hero.jsx
+import { useTranslation } from "react-i18next";
+import heroImg from "../../assets/hero-bucket.jpg";
 
 export default function Home() {
+  const { t } = useTranslation("common");
+
   return (
-    // <main className="bg-[#020D07] min-h-screen">
-    //   {/* Banner section */}
-    //   <section className="max-w-[1376px] mx-auto px-8 py-12 flex flex-col md:flex-row gap-8 items-center">
-    //     <div className="flex-1">
-    //       <div className="text-[#13BD39] text-5xl md:text-7xl font-extrabold mb-4">
-    //         Heineken: Mở ra thế giới của bạn
-    //       </div>
-    //       <div className="text-[#D7E4DD] text-lg mb-6">
-    //         Heineken có một lịch sử phong phú bắt đầu từ năm 1864, được thành
-    //         lập bởi Gerard Adriaan Heineken tại Amsterdam...
-    //       </div>
-    //     </div>
-    //     <img
-    //       src="/banner.jpg"
-    //       alt="Banner"
-    //       className="rounded-2xl w-full md:w-[400px] h-auto"
-    //     />
-    //   </section>
+    <section
+      className="relative isolate bg-[#020D07] border-b border-white/5"
+      style={{ paddingTop: "72px", paddingBottom: "72px" }}
+    >
+      <div className="container mx-auto max-w-[1376px] px-4 flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-[32px]">
+        {/* LEFT COLUMN */}
+        <div className="flex-1 order-2 lg:order-1 text-white max-w-[560px]">
+          {/* Slider indicator (3 chấm chạy qua lại) */}
+          <div className="flex items-center gap-2 mb-6">
+            {[0, 1, 2].map((i) => (
+              <span
+                key={i}
+                className={`block rounded-full transition-all duration-300 ${
+                  i === 0
+                    ? "w-[24px] h-[6px] bg-[#03B72A]"
+                    : "w-[6px] h-[6px] bg-white/30 hover:bg-white/50"
+                }`}
+              ></span>
+            ))}
+          </div>
 
-    //   {/* Sản phẩm section */}
-    //   <section className="max-w-[1376px] mx-auto px-8 py-12">
-    //     <div className="text-white text-3xl font-bold mb-8">
-    //       Sản phẩm của Heineken
-    //     </div>
-    //     <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-    //       {/* Thêm các sản phẩm */}
-    //       <div className="bg-[#191919] rounded-xl p-4 flex flex-col items-center">
-    //         <img
-    //           src="/product1.jpg"
-    //           alt="Heineken Original"
-    //           className="h-40 rounded-xl mb-4"
-    //         />
-    //         <div className="text-white font-bold">Heineken Original</div>
-    //         <div className="text-[#D7E4DD]">15.99 Kč</div>
-    //       </div>
-    //       {/* ...thêm các sản phẩm khác... */}
-    //     </div>
-    //   </section>
+          {/* Sub heading */}
+          <p className="text-[14px] tracking-[0.2em] uppercase text-white/70 mb-3">
+            {t("hero.kicker") || "HƯƠNG VỊ ĐẾN TỪ AMSTERDAM"}
+          </p>
 
-    //   {/* Lịch sử section */}
-    //   <section className="max-w-[1376px] mx-auto px-8 py-12">
-    //     <div className="text-white text-3xl font-bold mb-4">
-    //       Lịch sử Heineken
-    //     </div>
-    //     <div className="text-[#D7E4DD] text-lg mb-6">
-    //       Kể từ năm 1864, Heineken đã chế biến những loại bia tốt nhất được yêu
-    //       thích trên toàn thế giới.
-    //     </div>
-    //     <div className="flex flex-col md:flex-row gap-8 items-center">
-    //       <img
-    //         src="/history.jpg"
-    //         alt="History"
-    //         className="rounded-xl w-full md:w-[400px] h-auto"
-    //       />
-    //       <div className="text-[#D7E4DD]">
-    //         Hành trình của Heineken bắt đầu vào năm 1864 khi Gerard Adriaan
-    //         Heineken mua một nhà máy bia nhỏ ở Amsterdam...
-    //       </div>
-    //     </div>
-    //   </section>
-    // </main>
+          {/* Main heading */}
+          <h1 className="text-[48px] leading-[56px] font-extrabold text-[#03B72A] mb-4">
+            Heineken: <br />
+            <span className="text-white">Mở ra thế giới của bạn</span>
+          </h1>
 
-    <div className="container mx-auto py-10 text-white">
-      <h1 className="text-2xl font-bold">Trang chủ</h1>
-      <p>Nội dung trang chủ ở đây…</p>
-    </div>
+          {/* Description */}
+          <p className="text-[16px] leading-[26px] text-white/80">
+            {t("hero.desc") ||
+              "Heineken có một lịch sử phong phú bắt đầu từ năm 1864, được thành lập bởi Gerard Adriaan Heineken tại Amsterdam. Các giá trị của chúng tôi tập trung vào chất lượng, đổi mới và bền vững, đảm bảo rằng mỗi ngụm Heineken phản ánh cam kết của chúng tôi đối với sự xuất sắc."}
+          </p>
+        </div>
+
+        {/* RIGHT COLUMN: image */}
+        <div className="flex-1 order-1 lg:order-2 flex justify-center lg:justify-end">
+          <img
+            src={heroImg}
+            alt="Heineken bucket"
+            className="w-[672px] h-[672px] object-cover rounded-[22px] ring-1 ring-[#496E5B]/10"
+          />
+        </div>
+      </div>
+    </section>
   );
 }
