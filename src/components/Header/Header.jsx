@@ -39,9 +39,7 @@ export default function Header() {
   return (
     <header className="bg-[#020D07] z-[3]">
       <div className="container">
-        {/* Header bar: Figma height = 84px */}
         <div className="h-[84px] flex items-center justify-between">
-          {/* Logo (link về trang chủ) */}
           <div className="flex items-center shrink-0">
             <NavLink to="/">
               <img

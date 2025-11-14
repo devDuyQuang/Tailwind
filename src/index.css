@@ -16,6 +16,11 @@ body {
   background: #020d07;
 }
 
+html {
+  overflow-y: scroll; /* luôn dành chỗ cho scrollbar */
+  scrollbar-gutter: stable; /* hiện đại hơn: giữ rãnh cố định khi có/không có */
+}
+
 .container {
   max-width: 1376px;
   margin: 0 auto;
