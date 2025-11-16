@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  color-scheme: dark;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: #020d07;
+  font-family: "Tilt Warp", sans-serif;
+}
+
+html {
+  overflow-y: scroll; /* luôn dành chỗ cho scrollbar */
+  scrollbar-gutter: stable; /* hiện đại hơn: giữ rãnh cố định khi có/không có */
+}
+
+.container {
+  max-width: 1376px;
+  margin: 0 auto;
+}
