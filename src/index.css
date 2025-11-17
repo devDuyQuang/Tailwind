@@ -1,8 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Momo+Trust+Sans:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Momo+Trust+Sans:wght@200&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* nền tổng thể để dễ nhìn */
 :root {
   color-scheme: dark;
 }
@@ -14,7 +15,14 @@ body,
 body {
   margin: 0;
   background: #020d07;
+  font-family: "Tilt Warp", sans-serif;
 }
+.font-desc {
+  font-family: "Momo Trust Sans", sans-serif;
+  font-size: 20px;
+  line-height: 30px;
+}
+
 
 html {
   overflow-y: scroll; /* luôn dành chỗ cho scrollbar */
