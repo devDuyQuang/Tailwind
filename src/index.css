@@ -19,8 +19,15 @@ body {
 }
 .font-desc {
   font-family: "Momo Trust Sans", sans-serif;
-  font-size: 20px;
-  line-height: 30px;
+  /* font-size: 20px;
+  line-height: 30px; */
+}
+.font-heading {
+  font-family: "UTM Bebas", sans-serif;
+}
+
+.font-gilroy {
+  font-family: "SVN-Gilroy", sans-serif;
 }
 
 

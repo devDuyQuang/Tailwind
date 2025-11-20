@@ -2,10 +2,11 @@
 import { useEffect, useRef, useState } from "react";
 import SlideDots from "./SlideDots";
 
-import starBg from "../../assets/Fav-Icon.png";
-import heroImg from "../../assets/Heineken-in-ice-bucket .png";
-import slide2 from "../../assets/slide.jpeg";
-import slide3 from "../../assets/slides.jpeg";
+import starBg from "../../../assets/Fav-Icon.png";
+import heroImg from "../../../assets/Heineken-in-ice-bucket.png";
+import slide2 from "../../../assets/slide.jpeg";
+import slide3 from "../../../assets/slides.jpeg";
+
 
 export default function Slide() {
   // ====== DATA SLIDE ======
@@ -19,8 +20,8 @@ export default function Slide() {
       // 3 dòng để ép wrap y hệt figma (tất cả đều màu xanh)
       customLines: ["Heineken: Mở", "ra thế giới của bạn"],
       kickerClass: "",
-      titleClass: "text-[100px] leading-[110px]", // chỉnh to/nhỏ tại đây
-      descClass: "font-desc",
+      titleClass: "text-[100px] leading-[95px]", // chỉnh to/nhỏ tại đây
+      descClass: "font-desc text-[23px] leading-[22px]",
       imgBoxClass: "",
       imgClass: "",
       leftMaxW: "",
@@ -30,10 +31,10 @@ export default function Slide() {
       img: slide2,
       title: "Hương vị đẳng cấp thế giới trong tầm tay",
       kicker: "Sự sảng khoái với tinh thần ",
-      desc: "Desperados Original là một loại đồ uống biểu tượng, dám thử nghiệm. Sự kết hợp độc đáo giữa bia lager hơi có ga và rượu agave là lựa chọn tuyệt vời nhất cho mọi bữa tiệc, vừa sảng khoái vừa nhẹ nhàng. Mỗi ly mang đến bầu không khí tràn đầy năng lượng và niềm vui. Đây là thức uống gắn kết mọi người và biến mọi khoảnh khắc trở nên khó quên.",
+      desc: "Desperados Original là một loại đồ uống biểu tượng Sự kết hợp độc đáo giữa bia lager hơi có ga và rượu agave là lựa chọn tuyệt vời nhất cho mọi bữa tiệc, vừa sảng khoái vừa nhẹ nhàng. Mỗi ly mang đến bầu không khí tràn đầy năng lượng và niềm vui. Đây là thức uống gắn kết mọi người và biến mọi khoảnh khắc trở nên khó quên.",
       kickerClass: "",
-      titleClass: "text-[95px] leading-[110px]",
-      descClass: "font-desc",
+      titleClass: "text-[100px] leading-[95px]",
+      descClass: "font-desc text-[23px] leading-[22px]",
       imgBoxClass: "",
       imgClass: "",
       leftMaxW: "",
@@ -45,8 +46,8 @@ export default function Slide() {
       kicker: "NIỀM TỰ HÀO HƠN MỘT THẾ KỶ",
       desc: "Krušovice là loại bia Séc chính gốc với truyền thống từ năm 1581. Mỗi ngụm bia kết hợp giữa lịch sử, chất lượng và hương vị độc đáo, làm hài lòng tất cả những ai yêu thích bia Séc thượng hạng. Dù bạn chọn Bohem Lager tươi mát, Royal Lager đậm đà hay Original truyền thống, bạn luôn có thể tin tưởng vào một cốc bia tuyệt vời.",
       kickerClass: "",
-      titleClass: "text-[100px] leading-[110px]",
-      descClass: "font-desc",
+      titleClass: "text-[100px] leading-[95px]",
+      descClass: "font-desc text-[23px] leading-[22px]",
       imgBoxClass: "",
       imgClass: "",
       leftMaxW: "",

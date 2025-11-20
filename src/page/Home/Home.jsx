@@ -76,7 +76,9 @@
 // }
 
 // src/page/Home/Home.jsx
-import Slide from "./Slide"; // import phần slide đầu trang
+import Slide from "./Slide/Slide";
+import ProductSection from "./ProductSection/ProductSection";
+// import phần slide đầu trang
 
 export default function Home() {
   return (
@@ -85,7 +87,7 @@ export default function Home() {
       <Slide />
 
       {/* === Các phần khác của trang Home (thêm sau) === */}
-      {/* <ProductSection /> */}
+      <ProductSection />
       {/* <VideoSection /> */}
       {/* <FooterSection /> */}
     </main>
