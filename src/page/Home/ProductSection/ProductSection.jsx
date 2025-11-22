@@ -78,10 +78,11 @@ export default function ProductSection() {
                   key={tab}
                   type="button"
                   onClick={() => setActiveTab(tab)}
-                  className={`px-6 py-3 text-[18px] md:text-[20px] font-gilroy whitespace-nowrap border-b-2 transition-colors ${isActive
+                  className={`px-6 py-3 text-[18px] md:text-[20px] font-gilroy whitespace-nowrap border-b-2 transition-colors ${
+                    isActive
                       ? "border-[#14AE5C] text-[#17CC6C] font-bold"
                       : "border-transparent text-white/60 font-medium hover:text-white"
-                    }`}
+                  }`}
                 >
                   {tab}
                 </button>
@@ -96,8 +97,8 @@ export default function ProductSection() {
             <article key={p.id} className="flex flex-col gap-4">
               {/* IMAGE – click vào ảnh để đi detail */}
               <div
-                className="relative w-full h-[260px] md:h-[300px] xl:h-[336px] 
-                           rounded-[22px] border border-[#496E5B]/0 overflow-hidden 
+                className="relative w-full h-[260px] md:h-[300px] xl:h-[336px]
+                           rounded-[22px] border border-[#496E5B]/0 overflow-hidden
                            cursor-pointer group"
                 onClick={() => handleOpenDetail(p)}
               >
@@ -109,53 +110,61 @@ export default function ProductSection() {
               </div>
 
               {/* TEXT + CART */}
-              <div className="flex items-end justify-between gap-4 pr-4">
-                <div
-                  className="flex flex-col gap-1 cursor-pointer"
-                  onClick={() => handleOpenDetail(p)}
-                >
-                  {/* Discount badge */}
-                  {p.discount && (
-                    <div className="inline-flex items-center justify-center px-4 py-2 bg-[#43110D] rounded-[10px] 
-                outline outline-1 outline-[#B42318] outline-offset-[-1px]">
-                      <span className="font-gilroy text-[17px] leading-[20px] font-bold text-white">
-                        {p.discount}%
-                      </span>
-                    </div>
+             {/* TEXT + CART */}
+<div className="flex items-end justify-between gap-4 pr-4">
+  <div
+    className="flex flex-col gap-1 cursor-pointer"
+    onClick={() => handleOpenDetail(p)}
+  >
+    {/* VÙNG CHỪA CHỖ CHO DISCOUNT (luôn tồn tại) */}
+    <div className="h-[36px] mb-1 flex items-center">
+      {p.discount && (
+        <div
+          className="
+            inline-flex items-center justify-center
+            w-[90px] h-[36px]
+            bg-[#43110D]
+            rounded-[10px]
+            outline outline-1 outline-[#B42318] outline-offset-[-1px]
+          "
+        >
+          <span className="font-gilroy text-[17px] leading-[20px] text-white font-bold">
+            {p.discount}%
+          </span>
+        </div>
+      )}
+    </div>
 
-                  )}
+    {/* Name */}
+    <p className="font-gilroy text-[18px] md:text-[20px] leading-5 text-white/70 font-medium">
+      {p.name}
+    </p>
 
-                  {/* Name */}
-                  <p className="font-gilroy text-[18px] md:text-[20px] leading-5 text-white/70 font-medium">
-                    {p.name}
-                  </p>
+    {/* Prices */}
+    <div className="flex items-baseline gap-1 font-gilroy text-[15px] md:text-[17px] leading-5">
+      {p.oldPrice && (
+        <span className="text-white/50 line-through font-normal">
+          {p.oldPrice}
+        </span>
+      )}
+      <span className="text-[#D7E4DD] font-bold">{p.price}</span>
+    </div>
+  </div>
 
-                  {/* Prices */}
-                  <div className="flex items-baseline gap-1 font-gilroy text-[15px] md:text-[17px] leading-5">
-                    {p.oldPrice && (
-                      <span className="text-white/50 line-through font-normal">
-                        {p.oldPrice}
-                      </span>
-                    )}
-                    <span className="text-[#D7E4DD] font-bold">
-                      {p.price}
-                    </span>
-                  </div>
-                </div>
+  {/* Cart icon */}
+  <button
+    type="button"
+    onClick={(e) => handleAddToCart(p, e)}
+    className="relative w-10 h-10 rounded-full bg-[#18261E] flex items-center justify-center shrink-0 overflow-hidden hover:bg-[#1d3228] transition"
+  >
+    <img
+      src={cart}
+      alt="Cart Icon"
+      className="w-10 h-10 object-contain opacity-80 hover:opacity-100 transition"
+    />
+  </button>
+</div>
 
-                {/* Cart icon – giữ nguyên, chỉ thêm handler */}
-                <button
-                  type="button"
-                  onClick={(e) => handleAddToCart(p, e)}
-                  className="relative w-10 h-10 rounded-full bg-[#18261E] flex items-center justify-center shrink-0 overflow-hidden hover:bg-[#1d3228] transition"
-                >
-                  <img
-                    src={cart}
-                    alt="Cart Icon"
-                    className="w-10 h-10object-contain opacity-80 hover:opacity-100 transition"
-                  />
-                </button>
-              </div>
             </article>
           ))}
         </div>
@@ -163,7 +172,6 @@ export default function ProductSection() {
     </section>
   );
 }
-
 
 
 // Trong Figma, họ dựng UI bằng div tĩnh vì Figma chỉ là công cụ thiết kế, nó không có logic.
