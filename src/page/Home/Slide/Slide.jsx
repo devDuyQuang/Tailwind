@@ -66,7 +66,7 @@ export default function Slide() {
 
   const dotIndex = (currentIdx - 1 + baseSlides.length) % baseSlides.length;
 
-  const interval = 600000;
+  const interval = 6000;
   const timerRef = useRef(null);
 
   // đo width viewport để tính translate
